@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const formData = new FormData(this);
 
-        fetch("/js/send_mail.php", {
+        fetch("/js/send-mail.php", {
             method: "POST",
             body: formData
         })
