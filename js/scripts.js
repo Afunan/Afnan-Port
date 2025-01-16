@@ -76,3 +76,44 @@
 	});
 
 })(jQuery);
+
+//Contact Form
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("contactForm").addEventListener("submit", function(event){
+        event.preventDefault(); // Prevent the default form submission
+
+        // Show the loader and hide the button text
+        document.getElementById("buttonText").style.display = 'none';
+        document.getElementById("loader").style.display = 'inline';
+
+        const formData = new FormData(this);
+
+        fetch("send_mail.php", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Hide the loader and show the button text
+            document.getElementById("buttonText").style.display = 'inline';
+            document.getElementById("loader").style.display = 'none';
+
+            if (data.success) {
+                const alertMsg = document.getElementById("alert-msg");
+                alertMsg.innerHTML = "Message sent successfully.";
+            } else {
+                const alertMsg = document.getElementById("alert-msg");
+                alertMsg.innerHTML = "Failed to send the message, Please go back and try again!";
+            }
+            
+        })
+        .catch(error => {
+            // Hide the loader and show the button text
+            document.getElementById("buttonText").style.display = 'inline';
+            document.getElementById("loader").style.display = 'none';
+            
+            alert("An error occurred while sending the message.");
+            console.error("Error:", error);
+        });
+    });
+});
